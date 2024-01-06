@@ -1,3 +1,3 @@
-# TransQUality
+# TransQuality
 
 > Project description
