@@ -1,0 +1,96 @@
+{% extends "_base.html" %}
+
+{% block title %} User's Submissions - Transquality {% endblock title %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <h1>Last Forms Submissions</h1>
+        </div>
+
+        <div class="blank-space"> &nbsp; </div>
+
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">N Answered</th>
+                        <th scope="col">Complete</th>
+                        <th scope="col">Mineure</th>
+                        <th scope="col">Majeure</th>
+                        <th scope="col">Critique</th>
+                        <th scope="col">Updated At</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form in submissions %}
+                    <tr>
+                        <th scope="row">{{ form.form_id }}</th>
+                        <td>{{ form.question_number }}</td>
+                        <td>{{ form.complete }}</td>
+                        <td>{{ form.mineure }}</td>
+                        <td>{{ form.majeure }}</td>
+                        <td>{{ form.critique }}</td>
+                        <td>{{ form.created_at.strftime('%d/%m/%Y') }}</td>
+                        <td style="width: 150px;">
+                            <a href="{{ url_for('questionnaire', form_id=form.form_id, question_number=form.question_number) }}"
+                                class="btn btn-info" style="width: 100%;">Edit</a>
+                        </td>
+                        <td style="text-align: center; width: 170px;">
+                            <a href="{{ url_for('generate_pdf', form_id=form.form_id)}}" class="btn btn-success"
+                                style="width: 100%;">Generate PDF</a>
+                        </td>
+                        <td style="text-align: left; width: 150px;">
+                            <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
+                                style="width: 100%; color: white;">Delete</a>
+                        </td>
+                    </tr>
+
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                        aria-labelledby="deleteModal" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content" style="width: 100% !important;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmer la Suppression du Formulaire
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Êtes-vous sûr de vouloir supprimer ce questionnaire?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Retour</button>
+                                    <a type="button" class="btn btn-danger" href="{{ url_for('delete_form', form_id=form.form_id|int) }}">Supprimer le
+                                        Formulaire</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="d-flex gap-2 justify-content-right py-5">
+            <a class="btn btn-secondary d-inline-flex align-items-center" type="button" href="/home">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+                    viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                </svg>
+                Homepage
+            </a>
+        </div>
+
+    </div>
+
+{% endblock content %}

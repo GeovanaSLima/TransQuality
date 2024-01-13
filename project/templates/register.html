@@ -1,0 +1,103 @@
+{% extends "_base.html" %}
+
+{% block title %} Register - Transquality {% endblock title %}
+
+<head>
+    <style>
+        .alert-forms {
+            position: fixed;
+            top: 5%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            height: 4rem;
+        }
+    </style>
+</head>
+
+
+{% block content %}
+
+    <div class="limiter">
+        <!-- ALERTS -->
+        <div class="alert alert-danger alert-dismissible fade show alert-forms" id="passwordMismatchAlert" role="alert"
+            style="width: 80%; display: none;">
+            <strong>Error:</strong> The passwords do not match. Please try again.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        {% for error in errors %}
+        <div class="alert alert-success">
+            {{ error }}
+        </div>
+        {% endfor %}
+
+        <div class="alert alert-danger alert-dismissible fade show alert-forms" id="userExistsAlert" role="alert"
+            style="width: 80%; display: none;">
+            <strong>Error:</strong> This username already exists. Please try again.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="container-login100" style="background-image: none !important;">
+            <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+
+                <form class="login100-form validate-form flex-sb flex-w" action="/register" method="post">
+
+
+                    <span class="txt1 p-b-11">Veuillez saisir le <b>nom et prenom</b> du nouvel utilisateur : </span>
+                    <div class="wrap-input100 validate-input m-b-36" data-validate="Veuillez spécifier un login">
+                        <input class="input100" type="text" id="name" name="name" required value="{{name}}" placeholder="Nom et Prenom">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <span class="txt1 p-b-11">Veuillez saisir le <b>nom</b> d'utilisateur du nouvel utilisateur :
+                    </span>
+                    <div class="wrap-input100 validate-input m-b-36" data-validate="Veuillez spécifier un login">
+                        <input class="input100" type="text" id="username" name="username" required value="{{username}}" placeholder="Username">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <span class="txt1 p-b-11">Sélectionner le rôle de l'utilisateur : </span>
+                    <div class="dropdown" style="width: 100%;">
+                        <select id="role" name="role" class="btn btn-secondary dropdown-toggle m-b-36" value="{{role}}" required>
+                            <option value="admin">Administrateur</option>
+                            <option value="user">Utilisateur</option>
+                        </select>
+                        
+                    </div>
+
+                    <span class="txt1 p-b-11">Veuillez saisir le mot de passe : </span>
+                    <div class="wrap-input100 validate-input m-b-36" data-validate="Veuillez spécifier un mot de passe">
+                        <span class="btn-show-pass">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                        <input class="input100" type="password" id="password" name="password" value="{{password}}" placeholder="Password" required>
+                        <span class="focus-input100" required></span>
+                    </div>
+
+                    <span class="txt1 p-b-11">Veuillez confirmer le mot de passe : </span>
+                    <div class="wrap-input100 validate-input m-b-36" data-validate="Veuillez spécifier un mot de passe">
+                        <span class="btn-show-pass">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                        <input class="input100" type="password" id="passwordConfirm" name="passwordConfirm" value="{{passwordConfirm}}" required placeholder="Confirm Password">
+                        <span class="focus-input100" required></span>
+                    </div>
+
+                    <div class="container-login100-form-btn espace_top">
+                        <button type="submit" class="login100-form-btn" id="submitBtn">Registre</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/js/scriptLoginRegister.js"></script>
+
+{% endblock content %}
