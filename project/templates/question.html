@@ -1,0 +1,133 @@
+{% extends "_base.html" %}
+
+{% block title %} Questionnaire - Transquality {% endblock title %}
+
+{% block content %}
+
+    <div class="questionnaire-container">
+        <div class="wrap-login100 wrap-questionnaire p-l-85 p-r-85 p-t-55 p-b-55" style="min-height: 700px; height: auto; padding-bottom: 60px;">
+
+            <div class="questionnaire-form">
+                <img src="{{ url_for('static', path='images/icons/logo transdev.png') }}" width="150px" class="position-absolute top-0 end-0 mt-3 me-3">
+                <form method="post" action=".">
+                    <input type="hidden" name="question_number" value="{{ question_number }}">
+                    <h1 id="question-index">Question {{ question_number }}</h1>
+
+                    <div class="questions-info">
+                        <h3> {{ question.thematique }} / {{ question.localisation }} </h3>
+                    </div>
+
+                    <h4 id="question"> {{ question.question }} </h4>
+
+                    <div id="answer" class="my-4" style="font-size: 18px;">
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label" for="Avec réserve">
+                                <input type="radio" id="Avec réserve" name="answer" value="Avec réserve" class="form-check-input"
+                                        onclick="showAdditionalOptions();" {% if responses and responses.response == 'Avec réserve'%} checked {% endif %}>
+                                Avec réserve
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label" for="Sans réserve">
+                                <input type="radio" id="Sans réserve" name="answer" value="Sans réserve" class="form-check-input"
+                                    onclick="showAdditionalOptions();" {% if responses and responses.response == 'Sans réserve'%} checked {% endif %}>
+                                Sans réserve
+                            </label>
+                        </div>
+                    </div>
+                    <div id="reserves" style="display:none;">
+                        <div class="mb-4" style="padding-left: 1.2rem;">
+                            <div class="form-check form-check-inline">
+                                <label class="form-check-label" for="mineure">
+                                    <input type="radio" id="mineure" name="reserve" value="mineure" class="form-check-input" {% if responses and responses.reserve == 'mineure' %} checked {% endif %}>
+                                    Mineure
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label  class="form-check-label" for="majeure">
+                                    <input type="radio" id="majeure" name="reserve" value="majeure" class="form-check-input" {% if responses and responses.reserve == 'majeure' %} checked {% endif %}>
+                                    Majeure
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <label  class="form-check-label" for="critique">
+                                    <input type="radio" id="critique" name="reserve" value="critique" class="form-check-input" {% if responses and responses.reserve == 'critique' %} checked {% endif %}>
+                                    Critique
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group mb-5" style="width: 50%; padding-left: 1.2rem;">
+                            <textarea id="observation" name="observation" rows="4" cols="50" placeholder="Observations..." required class="form-control">{% if responses %} {{ responses.observation }} {% endif %}</textarea>
+                        </div>
+                    </div>
+                    <div class="custom-file">
+                        <label for="image-upload" class="custom-file-label">Télécharger une image (Optional) :</label>
+                        
+                        <input type="file" id="image-upload" name="image" accept="image/*" class="formControl" {% if responses and responses.image %} value="{{ responses.image }}" {% endif %}>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="confirmModalLabel">Enregistrer les réponses ?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Êtes-vous sûr de vouloir enregistrer les réponses ?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Retour</button>
+                                    <button type="button" class="btn btn-primary"
+                                        id="save-confirm-btn">Enregistrer</button>
+                                    <a type="button" class="btn btn-info"
+                                        id="save-confirm-pdf-btn">Enregistrer & Générer PDF</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div id="image-preview-container" class="my-4">
+                        <img {% if responses and responses.image %} src="../../{{ responses.image }}" style="display: block;" {% endif %} alt="" id="image-preview" width="500px" >
+
+                    </div>
+                
+                    <div class="forms-buttons mt-5">
+                        <button id="back-btn" type="button" style="display:none;" class="btn btn-secondary mx-1">Précédent</button>
+
+                        <button id="next-btn" type="button" class="btn btn-danger mx-1">Suivant</button>
+
+                        <button id="save-btn" type="button" data-toggle="modal"
+                            data-target="#confirmModal" class="btn btn-info mx-1">Sauver</button>
+                    </div>
+
+
+                    <input type="hidden" id="form-id" value="{{ form_id }}">
+                </form>
+
+                <!-- <div class="d-flex gap-2 justify-content-right py-5 "> -->
+                <!-- </div> -->
+                <a class="btn btn-secondary d-inline-flex align-items-center position-absolute bottom-0 start-3 mb-4" type="button" href="/home">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                    </svg>
+                    Homepage
+                </a>
+
+                
+            </div>
+        </div>
+
+
+    </div>
+    <script src="{{ url_for('static', path='/js/scriptQuestionnaire.js') }}"></script>
+    <script src="{{ url_for('static', path='/build/vfs_fonts.js') }}"></script>
+
+{% endblock content %}
