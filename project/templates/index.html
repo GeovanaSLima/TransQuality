@@ -1,0 +1,67 @@
+{% extends "_base.html" %}
+
+{% block title %} Transquality {% endblock title %}
+
+{% block content %}
+
+    <div class="limiter">
+        <div class="container-login100">
+            {% if msg %}
+            <div class="alert alert-info" role="alert">
+                {{msg}}
+            </div>
+            {% endif %}
+
+            <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55" style="height: 700px;">
+                <div class="login100-form validate-form ">
+                    <span class="login100-form-title p-b-32" style="justify-content: center; text-align: center;">
+                        <img src="../static/images/icons/logo transdev.png" width="250px">
+                    </span>
+                    <div class="index-buttons">
+                        <a class="login100-form-btn" href="/new-questionnaire" id="btn-questionnaire">New
+                            Questionnaire</a>
+                        <a class="login100-form-btn" href="/user-info" id="btn-userInfo">User Info</a>
+                        <a class="login100-form-btn" href="/submissions"
+                            id="btn-submissions">Submissions</a>
+                        {% if current_user.role == "admin" %}
+                        <a class="login100-form-btn" href="/register" id="btn-register">Register New
+                            User</a>
+                        {% endif %}
+                        <a class="login100-form-btn logout-btn" href="/logout" id="btn-logout">Logout</a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Logout Confirm Modal -->
+        <div id="logoutModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-title">
+                    <span class="close" onclick="closeLogoutModal()">&times;</span>
+                    <h2>Logout Confirmation</h2>
+                </div>
+                <p>Are you sure you want to logout?</p>
+                <div class="modal-buttons">
+                    <a id="logoutConfirmBtn" class="login100-form-btn" href="#" onclick="logout()">Yes, Logout</a>
+                    <a class="login100-form-btn cancel-btn" onclick="closeLogoutModal()">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showLogoutModal() {
+            var modal = document.getElementById("logoutModal");
+            modal.style.display = "block";
+        }
+
+        function closeLogoutModal() {
+            var modal = document.getElementById("logoutModal");
+            modal.style.display = "none";
+        }
+
+    </script>
+
+{% endblock content %}
