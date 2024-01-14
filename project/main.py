@@ -1,39 +1,4 @@
-from datetime import timedelta, datetime
-from io import BytesIO
-import io
-import json
-import random
-import string
-import time
-from bson import ObjectId
-from fastapi import APIRouter, FastAPI, File, Request, status, Depends, HTTPException, Response
-import uuid
-from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
-from pymongo import MongoClient, errors
-import pymongo
-from fastapi.templating import Jinja2Templates
-import os
-from pymongo.mongo_client import MongoClient
-from typing import List
-import certifi
-from fastapi.security import OAuth2PasswordRequestForm
-from fastapi.responses import RedirectResponse, FileResponse
-from fastapi import Cookie, responses
-from fastapi.exceptions import HTTPException
-from starlette.exceptions import HTTPException as StarletteHTTPException
-from starlette.responses import RedirectResponse, HTMLResponse
-from pymongo.errors import DuplicateKeyError
-from dotenv import load_dotenv
-import logging
-import asyncio
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
-from reportlab.lib.units import inch
-import tempfile
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, HRFlowable
-from functools import partial
-
+from app.imports import *
 
 from app.schemas import *
 from app.config import settings
@@ -73,7 +38,7 @@ load_dotenv()
 
 ############# MongoDB configuration
 
-client = MongoClient("mongodb+srv://geovanasslima:admin@transdevicam.nzlcwoa.mongodb.net/?retryWrites=true&w=majority",  tlsCAFile=certifi.where())
+client = MongoClient("mongodb+srv://geovanasslima:a1a2a3a4a5@cluster-geovanas.px1vwit.mongodb.net/?retryWrites=true&w=majority",  tlsCAFile=certifi.where())
 
 # Call the connect_to_mongodb function to establish the connection
 # client = connect_to_mongodb()

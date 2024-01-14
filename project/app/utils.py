@@ -1,18 +1,4 @@
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional
-
-from fastapi import Depends, HTTPException, Request, status
-from fastapi.openapi.models import OAuthFlows as OAuthFlowsModel
-from fastapi.security import (OAuth2, OAuth2PasswordBearer,
-                              OAuth2PasswordRequestForm)
-from fastapi.security.utils import get_authorization_scheme_param
-from jose import JWTError, jwt
-from passlib.context import CryptContext
-from pymongo import MongoClient
-from reportlab.pdfgen.canvas import Canvas 
-from reportlab.lib.pagesizes import letter  
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
-from reportlab.lib.styles import getSampleStyleSheet 
+from app.imports import *
 
 from .config import settings
 from .models import User

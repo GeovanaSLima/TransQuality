@@ -1,5 +1,4 @@
-import os
-from pydantic import BaseSettings
+from app.imports import *
 
 
 class Settings(BaseSettings):

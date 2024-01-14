@@ -1,9 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime
-from fastapi import UploadFile
-from pydantic import BaseModel, constr, validator
-from typing import Optional, List
+from app.imports import *
 
 
 class ResponseItem(BaseModel):
