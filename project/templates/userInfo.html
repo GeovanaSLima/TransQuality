@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="limiter">
         {% if msg %}
         <div class="container">
             <div class="alert alert-info" role="alert">
@@ -13,25 +13,27 @@
         </div>
         {% endif %}
         
-        <div class="user-info">
-            <h1>Profile</h1>
-
-            <div class="profile-info">
-                <h3>Name: {{ current_user.name }}</h3>
-                <h3>Username: {{ current_user.username }}</h3>
-                <h3>ID: {{ current_user._id }}</h3>
-
-                <div class="d-flex gap-2 justify-content-right py-5">
-                    <a class="btn btn-secondary d-inline-flex align-items-center" type="button" href="/home">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-arrow-left" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
-                        </svg>
-                        Homepage
-                    </a>
-                    <a type="button" class="btn btn-password-pr" id="edit-password-btn" style="margin-left: 12px; color: white;">Edit Password</a>
-                    
+        <div class="container-login100">
+            <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+                <h1 style="font-weight: 600;padding: 0 0 12px 0;">Profile</h1>
+    
+                <div class="profile-info">
+                    <h4 style="margin-bottom: 4px;"><b>Name: </b>{{ current_user.name }}</h4>
+                    <h4 style="margin-bottom: 4px;"><b>Username: </b>{{ current_user.username }}</h4>
+                    <h5 style="margin-bottom: 4px; font-style: italic;"><b>ID: </b>{{ current_user._id }}</h5>
+    
+                    <div class="d-flex gap-2 justify-content-right py-5">
+                        <a class="btn btn-secondary d-inline-flex align-items-center" type="button" href="/home">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                            </svg>
+                            Homepage
+                        </a>
+                        <a type="button" class="btn btn-password-pr" id="edit-password-btn" style="margin-left: 12px; color: white;">Edit Password</a>
+                        
+                    </div>
                 </div>
             </div>
         </div>
