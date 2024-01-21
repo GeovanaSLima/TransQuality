@@ -854,12 +854,14 @@ iframe {
     justify-content: center;
     align-items: center;
     padding: 15px;
+    background-image:
+      url('../images/Fond.jpg');
   }
   
   .questionnaire-container::before {
     content: "";
     background-image:
-      url('../images/icons/Fond.jpg');
+      url('../images/Fond.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     opacity: 0.6;
