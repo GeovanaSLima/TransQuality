@@ -5,16 +5,16 @@
 {% block content %}
 
     <div class="questionnaire-container">
-        <div class="wrap-login100 wrap-questionnaire p-l-85 p-r-85 p-t-55 p-b-55" style="min-height: 700px; height: auto; padding-bottom: 60px;">
+        <div class="wrap-login100 wrap-questionnaire p-l-25 p-r-25 p-t-65 p-b-55" style="min-height: 700px; height: auto; padding-bottom: 60px;">
 
             <div class="questionnaire-form">
-                <img src="{{ url_for('static', path='images/logo/PNG/logo-transquality.png') }}" width="150px" class="position-absolute top-0 end-0 mt-3 me-3">
+                <img src="{{ url_for('static', path='images/logo/PNG/logo-transquality.png') }}" width="25%" class="position-absolute top-0 end-0 mt-3 me-3">
                 <form method="post" action=".">
-                    <input type="hidden" name="question_number" value="{{ question_number }}">
-                    <h1 id="question-index">Question {{ question_number }}</h1>
+                    <input type="hidden" name="question_number" value="{{ question_number }}" style="font-weight: 600;">
+                    <h1 id="question-index" style="font-weight: 600;padding: 0 0 6px 0;">Question {{ question_number }}</h1>
 
                     <div class="questions-info">
-                        <h3> {{ question.theme }} / {{ question.location }} </h3>
+                        <h6 style="padding: 0 0 18px 0;font-style: italic;"> {{ question.theme }} / {{ question.location }} </h6>
                     </div>
 
                     <h4 id="question"> {{ question.question }} </h4>
@@ -60,7 +60,7 @@
                             <textarea id="observation" name="observation" rows="4" cols="50" placeholder="Observations..." required class="form-control">{% if responses %} {{ responses.observation }} {% endif %}</textarea>
                         </div>
                     </div>
-                    <div class="custom-file">
+                    <div class="custom-file" style="width: 50%;">
                         <label for="image-upload" class="custom-file-label">Upload an image (Optional) :</label>
                         
                         <input type="file" id="image-upload" name="image" accept="image/*" class="formControl" {% if responses and responses.image %} value="{{ responses.image }}" {% endif %}>
