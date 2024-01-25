@@ -304,7 +304,7 @@ function saveResponseAndGeneratePDF(redirectDestination) {
         "form_id": formId,
         "user_id": "",
         "question_number": questionIndex,
-        "response": selectedAnswer,
+        "answer": selectedAnswer,
         "reserve": reserveOption,
         "observation": observation,
         "image": imageSrc
@@ -368,9 +368,8 @@ function saveResponse(redirectDestination) {
 
     const responseObj = {
         "form_id": formId, // Use the global formId variable
-        "user_id": "",
         "question_number": questionIndex,
-        "response": selectedAnswer,
+        "answer": selectedAnswer,
         "reserve": reserveOption,
         "observation": observation,
         "image": imageSrc
