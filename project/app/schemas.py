@@ -5,7 +5,7 @@ from app.imports import *
 
 class ResponseItem(BaseModel):
     form_id: int
-    user_id: str
+    user_id: Optional[str] = None
     question_number: int
     answer: str
     reserve: str = ""
@@ -26,7 +26,7 @@ class ShowQuestionnaire(ResponseItem):
     Reserve: str = ""
     Observation: str = ""
     Images: Optional[List[UploadFile]]
-    user_id: int
+    user_id: str
 
     class Config():  
         orm_mode = True
@@ -34,7 +34,7 @@ class ShowQuestionnaire(ResponseItem):
 
 class FormItem(BaseModel):
     form_id: int
-    user_id: int
+    user_id: str
     complete: bool
     minor: int
     major: int
