@@ -942,6 +942,10 @@ iframe {
     border-color: #e00a0a !important;
   }
 
+.th {
+  white-space: nowrap;
+}
+
 .p-l-0 {padding-left: 0px;}
 .p-l-1 {padding-left: 1px;}
 .p-l-2 {padding-left: 2px;}
