@@ -115,19 +115,19 @@ def get_highest_question(form_id) -> int:
 
 
 def get_form_info(form_id, user_id):
-    mineure_count = responses_collection.count_documents({
+    minor_count = responses_collection.count_documents({
         'form_id': form_id,
-        'reserve': 'mineure'
+        'reserve': 'minor'
     })
 
-    majeure_count = responses_collection.count_documents({
+    major_count = responses_collection.count_documents({
         'form_id': form_id,
-        'reserve': 'majeure'
+        'reserve': 'major'
     })
 
-    critique_count = responses_collection.count_documents({
+    critical_count = responses_collection.count_documents({
         'form_id': form_id,
-        'reserve': 'critique'
+        'reserve': 'critical'
     })
             
     complete = get_highest_question(form_id) == questions_collection.count_documents({})
@@ -136,9 +136,9 @@ def get_form_info(form_id, user_id):
         'form_id': form_id,
         'user_id': user_id,
         'complete': complete,
-        'mineure': mineure_count,
-        'majeure': majeure_count,
-        'critique': critique_count,
+        'minor': minor_count,
+        'major': major_count,
+        'critical': critical_count,
         'question_number': get_highest_question(form_id),
         'created_at': datetime.utcnow()
     }
@@ -274,7 +274,7 @@ async def save_responses(request: Request, response: ResponseItem, current_user:
         if existing_response:
             # Check if the answers are different
             if (
-                existing_response["response"] != response.response
+                existing_response["answer"] != response.answer
                 or existing_response["reserve"] != response.reserve
                 or existing_response["observation"] != response.observation
                 or existing_response["image"] != response.image
@@ -284,7 +284,7 @@ async def save_responses(request: Request, response: ResponseItem, current_user:
                     {"_id": existing_response["_id"]},
                     {
                         "$set": {
-                            "response": response.response,
+                            "answer": response.answer,
                             "reserve": response.reserve,
                             "observation": response.observation,
                             "image": response.image,
@@ -300,7 +300,7 @@ async def save_responses(request: Request, response: ResponseItem, current_user:
                 "form_id": response.form_id,
                 "user_id": user_id,
                 "question_number": response.question_number,
-                "response": response.response,
+                "answer": response.answer,
                 "reserve": response.reserve,
                 "observation": response.observation,
                 "image": response.image,
@@ -360,9 +360,9 @@ def update_form(form: FormItem, current_user: User = Depends(get_current_user_fr
          "user_id": form['user_id']}, 
          {"$set":{
              "complete": form["complete"],
-             "mineure": form["mineure"],
-             "majeure": form["majeure"],
-             "critique": form["critique"],
+             "minor": form["minor"],
+             "major": form["major"],
+             "critical": form["critical"],
              "question_number": form["question_number"],
              "created_at": datetime.utcnow()
          }})
@@ -402,9 +402,9 @@ async def show_submissions(request: Request, current_user: User = Depends(get_cu
     for form in forms:
         form_id = form["form_id"]
         complete = form["complete"]
-        mineure = form["mineure"]
-        majeure = form["majeure"]
-        critique = form["critique"]
+        minor = form["minor"]
+        major = form["major"]
+        critical = form["critical"]
         question_number = form["question_number"]
         created_at = form["created_at"]
         submission = {
@@ -412,9 +412,9 @@ async def show_submissions(request: Request, current_user: User = Depends(get_cu
             "complete": complete,
             "question_number": question_number,
             "created_at": created_at,
-            "mineure": mineure,
-            "majeure": majeure,
-            "critique": critique
+            "minor": minor,
+            "major": major,
+            "critical": critical
             
         }
         submissions.append(submission)
@@ -442,10 +442,10 @@ async def generate_pdf(form_id: int, request: Request, current_user: User = Depe
 
     story = []
 
-    count_mineure = f"Mineure: {form['mineure']}"
-    count_majeure = f"Majeure: {form['majeure']}"
-    count_critique = f"Critique: {form['critique']}"
-    counts = Paragraph(f"{count_mineure}    |    {count_majeure}    |    {count_critique}", style_normal)
+    count_minor = f"Minor: {form['minor']}"
+    count_major = f"Major: {form['major']}"
+    count_critical = f"Critical: {form['critical']}"
+    counts = Paragraph(f"{count_minor}    |    {count_major}    |    {count_critical}", style_normal)
 
     ## Adding Header
     story.append(counts)
@@ -458,7 +458,7 @@ async def generate_pdf(form_id: int, request: Request, current_user: User = Depe
     for response in responses:
         question = questions_collection.find_one({"question_number": response["question_number"]})
         question_index = f"Question {question['question_number']}"
-        question_them_localisation = f"{question['thematique']} - {question['localisation']}"
+        question_them_localisation = f"{question['theme']} - {question['location']}"
         question_text = question["question"]
 
         # Question Info - Text
@@ -467,8 +467,8 @@ async def generate_pdf(form_id: int, request: Request, current_user: User = Depe
         q_text = Paragraph(question_text, style_h3)
 
         # Responses Info - Text
-        r_response = Paragraph(f"Réponse: {response['response']}", style_normal)
-        r_reserve = Paragraph(f"Réserve: {response['reserve']}", style_normal)
+        r_answer = Paragraph(f"Answer: {response['answer']}", style_normal)
+        r_reserve = Paragraph(f"Reservation: {response['reserve']}", style_normal)
         r_obs = Paragraph(f"Observation: {response['observation']}", style_normal)
         r_image = None
 
@@ -490,7 +490,7 @@ async def generate_pdf(form_id: int, request: Request, current_user: User = Depe
         story.append(Spacer(1, 6)) 
 
         ## Adding Info - Responses
-        story.append(r_response)
+        story.append(r_answer)
         story.append(Spacer(1, 2))
         story.append(r_reserve)
         story.append(Spacer(1, 2))

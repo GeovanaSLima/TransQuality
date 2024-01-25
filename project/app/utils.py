@@ -80,7 +80,7 @@ pdf_config_dict ={
     "Canvas": Canvas(f"Report_{datetime.utcnow().strftime('%d-%m-%Y')}", pagesize=letter),
     "Pageinfo": "TransQuality",
     "Title": "Report",
-    "Image": "static/images/icons/logo_transquality.png"
+    "Image": "static/images/icons/logo-transquality.png"
 }
 
 
@@ -90,7 +90,7 @@ def first_page(canvas, doc):
     canvas.drawCentredString(300, 750, pdf_config_dict["Title"])
     canvas.setFont('Times-Roman', 9)
     canvas.drawString(x=520, y=15, text=f"Page 1 / {pdf_config_dict['Pageinfo']}")
-    canvas.drawImage(pdf_config_dict["Image"], x=20, y=750, width=110, height=35)
+    canvas.drawImage(pdf_config_dict["Image"], x=20, y=750, width=190, height=35)
     canvas.drawString(547, 28, datetime.utcnow().strftime('%d/%m/%Y'))
     canvas.restoreState()
 
