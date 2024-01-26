@@ -80,7 +80,7 @@ pdf_config_dict ={
     "Canvas": Canvas(f"Report_{datetime.utcnow().strftime('%d-%m-%Y')}", pagesize=letter),
     "Pageinfo": "TransQuality",
     "Title": "Report",
-    "Image": "static/images/icons/logo-transquality.png"
+    "Image": "static/images/logo/PNG/logo-transquality.png"
 }
 
 
