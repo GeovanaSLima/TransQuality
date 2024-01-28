@@ -12,7 +12,12 @@ For this project, we're using MongoDB to create our database and hold the projec
 
 ## 🚀 Features
 
-- [x] 
+- [x] MongoDB Database Integration
+- [x] User Authentication
+- [x] User creation/deletion
+- [x] Creation of Forms
+- [x] Access and Edit old forms
+- [x] Creation of PDF from forms answers
 
 ## ✒️ Author
 
