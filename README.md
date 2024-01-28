@@ -24,7 +24,7 @@ For this project, we're using MongoDB to create our database and hold the projec
 <a href="https://learningdata.dev/sobre">  
  <img src="https://raw.githubusercontent.com/GeovanaSLima/GeovanaSLima/main/GitProfile.png" alt="Geovana Sousa"/>
   <p><b>Geovana Sousa 🚀</b></p></a>
-<p><i>A passionate Data Scientist and Developer ❤️</i></br>
+<p><i>A passionate Developer ❤️</i></br>
    Get in touch! 👋🏽</p>
 
 
