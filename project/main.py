@@ -37,12 +37,11 @@ router = APIRouter()
 load_dotenv()
 
 ############# MongoDB configuration
+def get_prod_client():
+    return MongoClient(settings.DATABASE_URL)
 
-client = MongoClient("mongodb+srv://geovanasslima:a1a2a3a4a5@cluster-geovanas.px1vwit.mongodb.net/?retryWrites=true&w=majority", tlsCAFile=certifi.where())
 
-# Call the connect_to_mongodb function to establish the connection
-# client = connect_to_mongodb()
-
+client = get_prod_client()
 db = client.get_database(settings.MONGO_INITDB_DATABASE)
 
 ### Collections Setup

@@ -18,14 +18,14 @@ from fastapi.responses import RedirectResponse, FileResponse
 from fastapi.exceptions import HTTPException
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.responses import RedirectResponse, HTMLResponse
-from pymongo.errors import DuplicateKeyError
+from pymongo.errors import DuplicateKeyError, ConnectionFailure
 from dotenv import load_dotenv
 import logging
 import asyncio
 from reportlab.lib.pagesizes import letter
 import tempfile
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, HRFlowable
-
+from mongomock import MongoClient as MockMongoClient
 
 #######################  MODELS  #######################
 
