@@ -16,6 +16,18 @@ def get_test_client():
     return MockMongoClient(settings.DATABASE_URL) 
 
 
+def generate_test_token(username: str):
+    expiration = datetime.utcnow() + timedelta(days=1)
+    data = {"sub": username, "exp": expiration}
+    token = jwt.encode(data, settings.JWT_PRIVATE_KEY, algorithm=settings.JWT_ALGORITHM)
+    return token
+
+
+class MockUser:
+    def __init__(self, username: str):
+        self.username = username
+
+        
 test_client = TestClient(app)
 
 app.dependency_overrides[get_prod_client] = get_test_client
