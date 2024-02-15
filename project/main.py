@@ -319,15 +319,19 @@ async def save_responses(request: Request, response: ResponseItem, current_user:
 
 @app.get("/delete/{form_id}",response_class=HTMLResponse)
 def delete_form(form_id: int, request: Request, current_user: User = Depends(get_current_user_from_token)):
-    print(" delete form method called :"+str(form_id))
+    print(" delete form method called: "+str(form_id))
+    print("Current user ID: ", current_user["_id"])
 
     result_responses = responses_collection.delete_many({"form_id": int(form_id), "user_id": str(current_user["_id"])})
     result_form = forms_collection.delete_one({"form_id": int(form_id), "user_id": str(current_user["_id"])})
 
+    print("Result of responses deletion:", result_responses.deleted_count)
+    print("Result of form deletion:", result_form.deleted_count)
+
     if result_form.deleted_count > 0:
-        success_message = "Form successfully deleted."
+        print("Form successfully deleted.")
     else:
-        success_message = "Form not found." 
+        print("Form not found.") 
     
     return RedirectResponse("/submissions", status_code=303)
 

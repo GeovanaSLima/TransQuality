@@ -23,9 +23,9 @@ def generate_test_token(username: str):
     return token
 
 
-class MockUser:
-    def __init__(self, username: str):
-        self.username = username
+class MockUser(dict):
+    def __init__(self, username: str, _id: str):
+        super().__init__(username=username, _id=_id)
 
         
 test_client = TestClient(app)

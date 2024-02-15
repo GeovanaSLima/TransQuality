@@ -14,7 +14,7 @@ from fastapi.templating import Jinja2Templates
 import os
 from pymongo.mongo_client import MongoClient
 import certifi
-from fastapi.responses import RedirectResponse, FileResponse
+from fastapi.responses import RedirectResponse, FileResponse,JSONResponse
 from fastapi.exceptions import HTTPException
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.responses import RedirectResponse, HTMLResponse

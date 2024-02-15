@@ -8,30 +8,31 @@ client = TestClient(app)
 
 class TestQuestionnaire:
     def test_new_questionnaire(self):
-
+        # Inserting User
         user = {"name": "Jane Doe", "username": "testUser", "role": "user", "password": "testing", "created_at": datetime.today()}
         users_collection.insert_one(user)
 
         token = generate_test_token(username="testUser")
-        app.dependency_overrides[get_current_user_from_token] = lambda: MockUser(username="testUser")
+        app.dependency_overrides[get_current_user_from_token] = lambda: {"username": "testUser", "_id": "mock_id"}
+
         response = client.get("/new-questionnaire", headers={"Authorization": f"Bearer {token}"})
 
+        # Assertions
         assert response.status_code == 200  
+
+        # Delete test cases
         users_collection.delete_one({"username": "testUser"})
 
-    # NEEDS TO BE FIXED
     def test_save_responses(self):
-        # Create a test user and insert into the database
-        user = {"name": "Jane Doe", "username": "testUser", "role": "user", "password": "testing", "created_at": datetime.today()}
-        users_collection.insert_one(user)
+        # User and Response Dictionaries
+        user = {
+            "name": "Jane Doe",
+            "username": "testUser",
+            "role": "user",
+            "password": "testing",
+            "created_at": datetime.today()
+        }
 
-        # Generate a test token for the created user
-        token = generate_test_token(username="testUser")
-
-        # Override the dependency to return the test user
-        app.dependency_overrides[get_current_user_from_token] = lambda: MockUser(username="testUser")
-
-        # Create a test response item
         response_item = {
             "form_id": 1,
             "question_number": 1,
@@ -41,14 +42,61 @@ class TestQuestionnaire:
             "image": "Test Image",
         }
 
-        # Make a request to the save_responses route with the test user's token and response item
+        users_collection.insert_one(user)
+
+        token = generate_test_token(username="testUser")
+        app.dependency_overrides[get_current_user_from_token] = lambda: {"username": "testUser", "_id": "mock_id"}
+        
         response = client.post("/save_responses", headers={"Authorization": f"Bearer {token}"}, json=response_item)
-        print(response.content)
-        # Check if the response indicates success
+
+        # Assertions
         assert response.status_code == 200
         assert response.json()["success"] == True
-
-        # Clean up: Delete the test user, form, and response from the database
+        
+        # Deleting test cases
         users_collection.delete_one({"username": "testUser"})
-        forms_collection.delete_one({"form_id": "testFormID", "user_id": str(user["_id"])})
-        responses_collection.delete_one({"form_id": "testFormID", "user_id": str(user["_id"]), "question_number": 1})
+        forms_collection.delete_one({"form_id": 1, "user_id": str(user["_id"])})
+        responses_collection.delete_one({"form_id": 1, "user_id": str(user["_id"]), "question_number": 1})
+
+    from bson import ObjectId
+
+    def test_delete_form(self):
+        # Inserting User and Form
+        user = {
+            "name": "Jane Doe",
+            "username": "testUser",
+            "role": "user",
+            "password": "testing",
+            "created_at": datetime.today()
+        }
+
+        users_collection.insert_one(user)
+
+        response_item = {
+            "form_id": 1,
+            "user_id": user["_id"],
+            "question_number": 1,
+            "answer": "Test Answer",
+            "reserve": "Test Reserve",
+            "observation": "Test Observation",
+            "image": "Test Image",
+        }
+
+        token = generate_test_token(username="testUser")
+        app.dependency_overrides[get_current_user_from_token] = lambda: {"username": "testUser", "_id": "mock_id"}
+
+        forms_collection.insert_one(response_item)
+
+        print(f"Here is the form: {forms_collection.find_one({'form_id': response_item['form_id']})}")
+
+        # Calling the Delete Route
+        response = client.get(f"/delete/{response_item['form_id']}", headers={"Authorization": f"Bearer {token}"})
+
+        # Assertions
+        assert response.status_code == 200
+
+        print(f"form not deleted: {forms_collection.find_one({'form_id': response_item['form_id']})}")
+        # Delete test cases
+        users_collection.delete_one({"username": "testUser"})
+
+
