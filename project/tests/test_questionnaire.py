@@ -58,29 +58,34 @@ class TestQuestionnaire:
         forms_collection.delete_one({"form_id": 1})
         responses_collection.delete_one({"form_id": 1})
 
+    # This is still with the problem of duplicate key error 
+    def test_delete_form(self):
+        # Inserting User and Form
+        user = {"name": "Jane Doe", "username": "testUser", "role": "user", "password": "testing", "created_at": datetime.today()}
+        users_collection.insert_one(user)
 
-    # def test_delete_form(self):
-    #     # Inserting User and Form
-    #     user = {"name": "Jane Doe", "username": "testUser", "role": "user", "password": "testing", "created_at": datetime.today()}
-    #     users_collection.insert_one(user)
+        response_item = {"form_id": 1, "user_id": user["_id"], "question_number": 1, "answer": "Test Answer", "reserve": "Test Reserve", "observation": "Test Observation", "image": "Test Image"}
 
-    #     response_item = {"form_id": 1, "user_id": user["_id"], "question_number": 1, "answer": "Test Answer", "reserve": "Test Reserve", "observation": "Test Observation", "image": "Test Image"}
+        token = generate_test_token(username="testUser")
+        app.dependency_overrides[get_current_user_from_token] = lambda: {"username": "testUser", "_id": "mock_id"}
 
-    #     token = generate_test_token(username="testUser")
-    #     app.dependency_overrides[get_current_user_from_token] = lambda: {"username": "testUser", "_id": "mock_id"}
+        forms_collection.insert_one(response_item)
 
-    #     forms_collection.insert_one(response_item)
+        # Calling the Delete Route
+        response = client.get(f"/delete/{response_item['form_id']}", headers={"Authorization": f"Bearer {token}"})
 
-    #     # Calling the Delete Route
-    #     response = client.get(f"/delete/{response_item['form_id']}", headers={"Authorization": f"Bearer {token}"})
+        # Assertions
+        assert response.status_code == 200
 
-    #     # Assertions
-    #     assert response.status_code == 200
+        # Delete test cases
+        users_collection.delete_one({"username": "testUser"})
 
-    #     # Delete test cases
-    #     users_collection.delete_one({"username": "testUser"})
-        # forms_collection.delete_one({"form_id": 1})
-        # responses_collection.delete_one({"form_id": 1})
+        found_user = users_collection.find_one(filter={"username": "testUser"})
+
+        print(f"user found: {found_user}")
+
+
+    # TypeError: Object of type ObjectId is not JSON serializable
 
     # def test_update_question(self):
     #     # Inserting User and Form
