@@ -21,6 +21,7 @@ class TestQuestionnaire:
         assert response.status_code == 200  
 
         # Delete test cases
+        forms_collection.delete_one({"form_id": 1, "user_id": "mock_id"}) 
         users_collection.delete_one({"username": "testUser"})
 
     def test_save_responses(self):
@@ -54,13 +55,13 @@ class TestQuestionnaire:
         assert response.json()["success"] == True
         
         # Delete test cases
+        forms_collection.delete_one({"form_id": 1, "user_id": "mock_id"}) 
         users_collection.delete_one({"username": "testUser"})
-        forms_collection.delete_one({"form_id": 1})
-        responses_collection.delete_one({"form_id": 1})
+        responses_collection.delete_many({"form_id": 1, "user_id": "mock_id"})
 
     # This is still with the problem of duplicate key error 
     def test_delete_form(self):
-        # Inserting User and Form
+        # Inserting User
         user = {"name": "Jane Doe", "username": "testUser", "role": "user", "password": "testing", "created_at": datetime.today()}
         users_collection.insert_one(user)
 
@@ -80,9 +81,6 @@ class TestQuestionnaire:
         # Delete test cases
         users_collection.delete_one({"username": "testUser"})
 
-        found_user = users_collection.find_one(filter={"username": "testUser"})
-
-        print(f"user found: {found_user}")
 
 
     # TypeError: Object of type ObjectId is not JSON serializable
