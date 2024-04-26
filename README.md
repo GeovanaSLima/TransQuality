@@ -21,7 +21,44 @@ For this project, we're using MongoDB to create our database and hold the projec
 - [x] Creation of PDF from forms answers
 - [x] Route's Unit Tests 
 
-##
+## 🔨 Installation and Configuration
+
+Before starting, you'll need to have installed the following tools:
+* [Python](https://www.python.org/)
+
+```bash
+
+## Create the Virtual Env 
+$ python -m venv .venv       
+
+## Activating the virtual env (Windows)
+$ .venv/Scripts/activate    
+
+## Activating the virtual env (Ubuntu/MacOS)
+$ source .venv/bin/activate
+
+## Install project requirements
+$ pip install -r requirements.txt      
+```
+
+<br>
+<br>
+
+## 💻 Running locally
+
+To run the project locally and debug run:
+
+```bash
+## On the project folder
+$ cd project
+$ uvicorn main:app
+
+## Expected result
+INFO:     Started server process [83554]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+```
 
 ## ✒️ Author
 
