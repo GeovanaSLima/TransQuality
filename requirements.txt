@@ -45,6 +45,6 @@ sqlparse==0.4.4
 starlette==0.36.2
 tomli==2.0.1
 typing_extensions==4.5.0
-urllib3==1.26.18
+urllib3==2.7.0
 uvicorn==0.22.0
 yarg==0.1.9
