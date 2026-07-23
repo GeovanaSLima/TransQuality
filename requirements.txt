@@ -27,7 +27,7 @@ pillow==12.3.0
 pipreqs==0.4.13
 pluggy==1.4.0
 pyasn1==0.6.4
-pydantic==1.10.7
+pydantic==1.10.13
 PyJWT==2.13.0
 pymongo==4.3.3
 pytest==9.0.3
