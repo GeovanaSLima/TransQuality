@@ -1,7 +1,7 @@
 anyio==3.6.2
 asgiref==3.7.2
 bcrypt==4.0.1
-certifi==2023.7.22
+certifi==2024.7.4
 chardet==5.2.0
 charset-normalizer==3.1.0
 click==8.1.3
